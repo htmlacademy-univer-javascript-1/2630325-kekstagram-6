@@ -1,6 +1,9 @@
-import { photosData } from './data.js';
+import { initThumbnails } from './thumbnails.js';
 
-// eslint-disable-next-line no-undef
-сonsole.log(photosData);
+const initApp = () => {
+  initThumbnails();
+};
+
+document.addEventListener('DOMContentLoaded', initApp);
 
 
