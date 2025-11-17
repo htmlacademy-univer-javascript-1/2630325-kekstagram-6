@@ -1,61 +1,55 @@
-import { getRandomInteger, getRandomArrayElement } from './util.js';
-import { generatePhotoId, generateCommentId } from './id-generator.js';
-
-const NAMES = [
-  'Артём', 'Мария', 'Иван', 'София', 'Дмитрий',
-  'Анна', 'Алексей', 'Виктория', 'Сергей', 'Екатерина',
-  'Максим', 'Ольга', 'Павел', 'Наталья', 'Владимир'
+// Временные данные для разработки
+const createPictures = () => [
+  {
+    id: 1,
+    url: 'https://example.com/photos/1.jpg',
+    description: 'Прекрасный закат на море',
+    likes: 156,
+    comments: [
+      { id: 1, text: 'Отличное фото!', author: 'user1' },
+      { id: 2, text: 'Очень красиво', author: 'user2' }
+    ]
+  },
+  {
+    id: 2,
+    url: 'https://example.com/photos/2.jpg',
+    description: 'Горный пейзаж',
+    likes: 89,
+    comments: [
+      { id: 3, text: 'Великолепно!', author: 'user3' }
+    ]
+  },
+  {
+    id: 3,
+    url: 'https://example.com/photos/3.jpg',
+    description: 'Городская архитектура',
+    likes: 203,
+    comments: [
+      { id: 4, text: 'Интересный ракурс', author: 'user4' },
+      { id: 5, text: 'Люблю этот город', author: 'user5' },
+      { id: 6, text: 'Отличное качество', author: 'user6' }
+    ]
+  },
+  {
+    id: 4,
+    url: 'https://example.com/photos/4.jpg',
+    description: 'Лесная тропа',
+    likes: 134,
+    comments: [
+      { id: 7, text: 'Хочу туда!', author: 'user7' }
+    ]
+  },
+  {
+    id: 5,
+    url: 'https://example.com/photos/5.jpg',
+    description: 'Ночной город',
+    likes: 278,
+    comments: [
+      { id: 8, text: 'Потрясающие огни', author: 'user8' },
+      { id: 9, text: 'Отличная работа', author: 'user9' }
+    ]
+  }
 ];
 
-const MESSAGES = [
-  'Всё отлично!',
-  'В целом всё неплохо. Но не всё.',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
-];
+export { createPictures };
 
-const DESCRIPTIONS = [
-  'Отличный день на пляже',
-  'Вкусный ужин в ресторане',
-  'Мой пушистый друг',
-  'Горные пейзажи просто захватывают дух',
-  'Уютный вечер с книгой',
-  'Новый рецепт удался на славу',
-  'Прогулка по осеннему парку',
-  'Мои новые кроссовки',
-  'Закат над океаном',
-  'Кофе и работа в кафе',
-  'Цветы в моем саду',
-  'Путешествие в новый город',
-  'Спортивные достижения',
-  'Домашний кинотеатр',
-  'Встреча с друзьями'
-];
-
-const createComment = () => ({
-  id: generateCommentId(),
-  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
-  message: getRandomArrayElement(MESSAGES),
-  name: getRandomArrayElement(NAMES)
-});
-
-const createComments = () => {
-  const commentsCount = getRandomInteger(0, 30);
-  return Array.from({ length: commentsCount }, createComment);
-};
-
-const createPhotoData = (index) => ({
-  id: generatePhotoId(),
-  url: `photos/${index + 1}.jpg`,
-  description: getRandomArrayElement(DESCRIPTIONS),
-  likes: getRandomInteger(15, 200),
-  comments: createComments()
-});
-
-const generatePhotosData = () => Array.from({ length: 25 }, (_, index) => createPhotoData(index));
-
-const photosData = generatePhotosData();
-
-export { photosData };
