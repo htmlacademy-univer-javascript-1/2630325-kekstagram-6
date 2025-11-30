@@ -1,4 +1,3 @@
-// Временные данные для разработки
 const createPictures = () => [
   {
     id: 1,
@@ -46,7 +45,11 @@ const createPictures = () => [
     likes: 278,
     comments: [
       { id: 8, avatar: 'img/avatar-2.svg', name: 'Елена', message: 'Потрясающие огни' },
-      { id: 9, avatar: 'img/avatar-3.svg', name: 'Павел', message: 'Отличная работа' }
+      { id: 9, avatar: 'img/avatar-3.svg', name: 'Павел', message: 'Отличная работа' },
+      { id: 10, avatar: 'img/avatar-4.svg', name: 'Максим', message: 'Прикольно' },
+      { id: 11, avatar: 'img/avatar-5.svg', name: 'Игорь', message: 'Классно' },
+      { id: 12, avatar: 'img/avatar-6.svg', name: 'Леонид', message: 'Замечательно' },
+      { id: 8, avatar: 'img/avatar-2.svg', name: 'Илья', message: 'Имба' }
     ]
   }
 ];
