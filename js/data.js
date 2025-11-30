@@ -45,7 +45,11 @@ const createPictures = () => [
     likes: 278,
     comments: [
       { id: 8, avatar: 'img/avatar-2.svg', name: 'Елена', message: 'Потрясающие огни' },
-      { id: 9, avatar: 'img/avatar-3.svg', name: 'Павел', message: 'Отличная работа' }
+      { id: 9, avatar: 'img/avatar-3.svg', name: 'Павел', message: 'Отличная работа' },
+      { id: 8, avatar: 'img/avatar-2.svg', name: 'Елена', message: 'Прикольно' },
+      { id: 9, avatar: 'img/avatar-3.svg', name: 'Павел', message: 'Классно' },
+      { id: 8, avatar: 'img/avatar-2.svg', name: 'Елена', message: 'Замечательно' },
+      { id: 9, avatar: 'img/avatar-3.svg', name: 'Павел', message: 'Имба' }
     ]
   }
 ];
