@@ -1,17 +1,31 @@
+// thumbnails.js
 import { createPictures } from './data.js';
+import { openBigPicture } from './big-picture.js'; // Импортируем функцию открытия
 
 const createThumbnailElement = (picture) => {
   const template = document.querySelector('#picture').content;
-  const thumbnail = template.cloneNode(true);
+  const thumbnailFragment = template.cloneNode(true); // Клонируем фрагмент
 
-  const img = thumbnail.querySelector('.picture_img');
+  // Находим элементы внутри фрагмента
+  // ВАЖНО: Ищем ссылку с классом .picture, чтобы повесить клик
+  const thumbnailLink = thumbnailFragment.querySelector('.picture');
+  const img = thumbnailFragment.querySelector('.picture__img');
+  const likes = thumbnailFragment.querySelector('.picture__likes');
+  const comments = thumbnailFragment.querySelector('.picture__comments');
+
+  // Заполняем данными
   img.src = picture.url;
   img.alt = picture.description;
+  likes.textContent = picture.likes;
+  comments.textContent = picture.comments.length;
 
-  thumbnail.querySelector('.picture_likes').textContent = picture.likes;
-  thumbnail.querySelector('.picture_comments').textContent = picture.comments.length;
+  // Добавляем обработчик клика
+  thumbnailLink.addEventListener('click', (evt) => {
+    evt.preventDefault(); // Предотвращаем переход по ссылке
+    openBigPicture(picture); // Открываем большое фото с данными текущего объекта
+  });
 
-  return thumbnail;
+  return thumbnailFragment;
 };
 
 const renderThumbnails = (pictures) => {
@@ -32,3 +46,4 @@ const initThumbnails = () => {
 };
 
 export { initThumbnails };
+
