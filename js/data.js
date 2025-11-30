@@ -2,54 +2,55 @@
 const createPictures = () => [
   {
     id: 1,
-    url: 'https://example.com/photos/1.jpg',
+    url: 'photos/1.jpg',
     description: 'Прекрасный закат на море',
     likes: 156,
     comments: [
-      { id: 1, text: 'Отличное фото!', author: 'user1' },
-      { id: 2, text: 'Очень красиво', author: 'user2' }
+      { id: 1, avatar: 'img/avatar-1.svg', name: 'Иван', message: 'Отличное фото!' },
+      { id: 2, avatar: 'img/avatar-2.svg', name: 'Мария', message: 'Очень красиво' }
     ]
   },
   {
     id: 2,
-    url: 'https://example.com/photos/2.jpg',
+    url: 'photos/2.jpg',
     description: 'Горный пейзаж',
     likes: 89,
     comments: [
-      { id: 3, text: 'Великолепно!', author: 'user3' }
+      { id: 3, avatar: 'img/avatar-3.svg', name: 'Алексей', message: 'Великолепно!' }
     ]
   },
   {
     id: 3,
-    url: 'https://example.com/photos/3.jpg',
+    url: 'photos/3.jpg',
     description: 'Городская архитектура',
     likes: 203,
     comments: [
-      { id: 4, text: 'Интересный ракурс', author: 'user4' },
-      { id: 5, text: 'Люблю этот город', author: 'user5' },
-      { id: 6, text: 'Отличное качество', author: 'user6' }
+      { id: 4, avatar: 'img/avatar-4.svg', name: 'Ольга', message: 'Интересный ракурс' },
+      { id: 5, avatar: 'img/avatar-5.svg', name: 'Дмитрий', message: 'Люблю этот город' },
+      { id: 6, avatar: 'img/avatar-6.svg', name: 'Анна', message: 'Отличное качество' }
     ]
   },
   {
     id: 4,
-    url: 'https://example.com/photos/4.jpg',
+    url: 'photos/4.jpg',
     description: 'Лесная тропа',
     likes: 134,
     comments: [
-      { id: 7, text: 'Хочу туда!', author: 'user7' }
+      { id: 7, avatar: 'img/avatar-1.svg', name: 'Сергей', message: 'Хочу туда!' }
     ]
   },
   {
     id: 5,
-    url: 'https://example.com/photos/5.jpg',
+    url: 'photos/5.jpg',
     description: 'Ночной город',
     likes: 278,
     comments: [
-      { id: 8, text: 'Потрясающие огни', author: 'user8' },
-      { id: 9, text: 'Отличная работа', author: 'user9' }
+      { id: 8, avatar: 'img/avatar-2.svg', name: 'Елена', message: 'Потрясающие огни' },
+      { id: 9, avatar: 'img/avatar-3.svg', name: 'Павел', message: 'Отличная работа' }
     ]
   }
 ];
 
 export { createPictures };
+
 
