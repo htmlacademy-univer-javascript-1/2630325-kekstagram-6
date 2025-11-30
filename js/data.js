@@ -49,7 +49,7 @@ const createPictures = () => [
       { id: 10, avatar: 'img/avatar-4.svg', name: 'Максим', message: 'Прикольно' },
       { id: 11, avatar: 'img/avatar-5.svg', name: 'Игорь', message: 'Классно' },
       { id: 12, avatar: 'img/avatar-6.svg', name: 'Леонид', message: 'Замечательно' },
-      { id: 8, avatar: 'img/avatar-7.svg', name: 'Илья', message: 'Имба' }
+      { id: 8, avatar: 'img/avatar-2.svg', name: 'Илья', message: 'Имба' }
     ]
   }
 ];
