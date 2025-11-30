@@ -1,3 +1,6 @@
+import { resetScale } from './scale.js';
+import { resetEffects } from './effects.js';
+
 const MAX_HASHTAGS_COUNT = 5;
 const MAX_DESCRIPTION_LENGTH = 140;
 const HASHTAG_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -47,21 +50,25 @@ const validateDescriptionLength = (value) => value.length <= MAX_DESCRIPTION_LEN
 pristine.addValidator(
   hashtagsInputElement,
   validateHashtagsFormat,
+  'Хэш-тег должен начинаться с # и содержать только буквы и цифры (максимум 20 символов)'
 );
 
 pristine.addValidator(
   hashtagsInputElement,
   validateHashtagsCount,
+  `Максимум ${MAX_HASHTAGS_COUNT} хэш-тегов`
 );
 
 pristine.addValidator(
   hashtagsInputElement,
   validateHashtagsUniqueness,
+  'Хэш-теги не должны повторяться'
 );
 
 pristine.addValidator(
   descriptionInputElement,
   validateDescriptionLength,
+  `Максимум ${MAX_DESCRIPTION_LENGTH} символов`
 );
 
 const onFieldKeydown = (evt) => {
@@ -80,6 +87,8 @@ const closeForm = () => {
 
   formElement.reset();
   pristine.reset();
+  resetScale();
+  resetEffects();
 };
 
 function onDocumentKeydown(evt) {
