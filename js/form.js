@@ -6,6 +6,7 @@ import { showSuccessMessage, showErrorMessage } from './messages.js';
 const MAX_HASHTAGS_COUNT = 5;
 const MAX_DESCRIPTION_LENGTH = 140;
 const HASHTAG_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
+const FILE_TYPES = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -19,6 +20,8 @@ const closeButtonElement = formElement.querySelector('.img-upload__cancel');
 const hashtagsInputElement = formElement.querySelector('.text__hashtags');
 const descriptionInputElement = formElement.querySelector('.text__description');
 const submitButtonElement = formElement.querySelector('.img-upload__submit');
+const previewImageElement = formElement.querySelector('.img-upload__preview img');
+const effectsPreviewElements = formElement.querySelectorAll('.effects__preview');
 const bodyElement = document.body;
 
 const pristine = new Pristine(formElement, {
@@ -122,7 +125,23 @@ const openForm = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
+const updatePreview = () => {
+  const file = fileInputElement.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const isValidType = FILE_TYPES.some((type) => fileName.endsWith(type));
+
+  if (isValidType) {
+    const imageUrl = URL.createObjectURL(file);
+    previewImageElement.src = imageUrl;
+    effectsPreviewElements.forEach((preview) => {
+      preview.style.backgroundImage = `url('${imageUrl}')`;
+    });
+  }
+};
+
 const onFileInputChange = () => {
+  updatePreview();
   openForm();
 };
 
