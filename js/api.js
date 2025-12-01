@@ -17,15 +17,6 @@ const loadPictures = () =>
         throw new Error(ErrorText.GET_DATA);
       }
       return response.json();
-    })
-    .then((data) => {
-      console.log('Исходный URL:', data[0].url);
-      const modified = data.map((picture) => ({
-        ...picture,
-        url: `${BASE_URL}/${picture.url}`
-      }));
-      console.log('Новый URL:', modified[0].url);
-      return modified;
     });
 
 const sendPicture = (formData) =>
