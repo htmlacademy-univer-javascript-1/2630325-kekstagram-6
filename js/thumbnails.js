@@ -2,8 +2,6 @@ import { openBigPicture } from './big-picture.js';
 
 const createThumbnailElement = (picture) => {
   const templateElement = document.querySelector('#picture').content;
-  console.log('Шаблон найден:', templateElement);
-
   const thumbnailFragment = templateElement.cloneNode(true);
 
   const linkElement = thumbnailFragment.querySelector('.picture');
@@ -25,11 +23,7 @@ const createThumbnailElement = (picture) => {
 };
 
 const renderThumbnails = (pictures) => {
-  console.log('renderThumbnails вызван с количеством:', pictures.length);
-
   const containerElement = document.querySelector('.pictures');
-  console.log('Контейнер найден:', containerElement);
-
   const fragment = document.createDocumentFragment();
 
   pictures.forEach((picture) => {
@@ -38,7 +32,6 @@ const renderThumbnails = (pictures) => {
   });
 
   containerElement.appendChild(fragment);
-  console.log('Миниатюры добавлены в DOM');
 };
 
 export { renderThumbnails };
