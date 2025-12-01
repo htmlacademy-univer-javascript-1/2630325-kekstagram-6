@@ -1,9 +1,16 @@
 import { resetScale } from './scale.js';
 import { resetEffects } from './effects.js';
+import { sendPicture } from './api.js';
+import { showSuccessMessage, showErrorMessage } from './messages.js';
 
 const MAX_HASHTAGS_COUNT = 5;
 const MAX_DESCRIPTION_LENGTH = 140;
 const HASHTAG_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
+
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SUBMITTING: 'Публикую...'
+};
 
 const formElement = document.querySelector('.img-upload__form');
 const fileInputElement = formElement.querySelector('.img-upload__input');
@@ -11,6 +18,7 @@ const overlayElement = formElement.querySelector('.img-upload__overlay');
 const closeButtonElement = formElement.querySelector('.img-upload__cancel');
 const hashtagsInputElement = formElement.querySelector('.text__hashtags');
 const descriptionInputElement = formElement.querySelector('.text__description');
+const submitButtonElement = formElement.querySelector('.img-upload__submit');
 const bodyElement = document.body;
 
 const pristine = new Pristine(formElement, {
@@ -71,10 +79,18 @@ pristine.addValidator(
   `Максимум ${MAX_DESCRIPTION_LENGTH} символов`
 );
 
-const onFieldKeydown = (evt) => {
-  if (evt.key === 'Escape') {
-    evt.stopPropagation();
-  }
+const isTextFieldFocused = () =>
+  document.activeElement === hashtagsInputElement ||
+  document.activeElement === descriptionInputElement;
+
+const blockSubmitButton = () => {
+  submitButtonElement.disabled = true;
+  submitButtonElement.textContent = SubmitButtonText.SUBMITTING;
+};
+
+const unblockSubmitButton = () => {
+  submitButtonElement.disabled = false;
+  submitButtonElement.textContent = SubmitButtonText.IDLE;
 };
 
 const closeForm = () => {
@@ -82,8 +98,6 @@ const closeForm = () => {
   bodyElement.classList.remove('modal-open');
 
   document.removeEventListener('keydown', onDocumentKeydown);
-  hashtagsInputElement.removeEventListener('keydown', onFieldKeydown);
-  descriptionInputElement.removeEventListener('keydown', onFieldKeydown);
 
   formElement.reset();
   pristine.reset();
@@ -92,9 +106,12 @@ const closeForm = () => {
 };
 
 function onDocumentKeydown(evt) {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    closeForm();
+  if (evt.key === 'Escape' && !isTextFieldFocused()) {
+    const errorElement = document.querySelector('.error');
+    if (!errorElement) {
+      evt.preventDefault();
+      closeForm();
+    }
   }
 }
 
@@ -103,8 +120,6 @@ const openForm = () => {
   bodyElement.classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentKeydown);
-  hashtagsInputElement.addEventListener('keydown', onFieldKeydown);
-  descriptionInputElement.addEventListener('keydown', onFieldKeydown);
 };
 
 const onFileInputChange = () => {
@@ -112,13 +127,28 @@ const onFileInputChange = () => {
 };
 
 const onFormSubmit = (evt) => {
+  evt.preventDefault();
+
   const isValid = pristine.validate();
   if (!isValid) {
-    evt.preventDefault();
+    return;
   }
+
+  blockSubmitButton();
+
+  sendPicture(new FormData(formElement))
+    .then(() => {
+      closeForm();
+      showSuccessMessage();
+    })
+    .catch(() => {
+      showErrorMessage();
+    })
+    .finally(unblockSubmitButton);
 };
 
 fileInputElement.addEventListener('change', onFileInputChange);
 closeButtonElement.addEventListener('click', closeForm);
 formElement.addEventListener('submit', onFormSubmit);
+
 
