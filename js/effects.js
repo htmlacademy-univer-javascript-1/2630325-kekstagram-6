@@ -43,8 +43,8 @@ const EFFECTS = {
   }
 };
 
-const formElement = document.querySelector('.img-upload__form');
 const imagePreviewElement = document.querySelector('.img-upload__preview img');
+const effectsListElement = document.querySelector('.effects__list');
 const effectLevelSliderElement = document.querySelector('.effect-level__slider');
 const effectLevelValueElement = document.querySelector('.effect-level__value');
 const effectLevelElement = document.querySelector('.img-upload__effect-level');
@@ -83,8 +83,10 @@ const onSliderUpdate = () => {
 };
 
 const onEffectChange = (evt) => {
-  currentEffect = evt.target.value;
-  updateSlider();
+  if (evt.target.name === 'effect') {
+    currentEffect = evt.target.value;
+    updateSlider();
+  }
 };
 
 const resetEffects = () => {
@@ -107,7 +109,7 @@ noUiSlider.create(effectLevelSliderElement, {
 });
 
 effectLevelSliderElement.noUiSlider.on('update', onSliderUpdate);
-formElement.addEventListener('change', onEffectChange);
+effectsListElement.addEventListener('change', onEffectChange);
 
 effectLevelElement.classList.add('hidden');
 
