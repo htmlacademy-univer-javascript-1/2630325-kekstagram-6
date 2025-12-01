@@ -17,7 +17,11 @@ const loadPictures = () =>
         throw new Error(ErrorText.GET_DATA);
       }
       return response.json();
-    });
+    })
+    .then((data) => data.map((picture) => ({
+      ...picture,
+      url: `${BASE_URL}/${picture.url}`
+    })));
 
 const sendPicture = (formData) =>
   fetch(`${BASE_URL}${Route.SEND_DATA}`, {
