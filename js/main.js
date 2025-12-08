@@ -1,12 +1,17 @@
-import { initThumbnails } from './thumbnails.js';
+import { renderThumbnails } from './thumbnails.js';
+import { loadPictures } from './api.js';
+import { showLoadError } from './messages.js';
 import './form.js';
-import './scale.js';
-import './effects.js';
 
 const initApp = () => {
-  initThumbnails();
+  loadPictures()
+    .then((pictures) => {
+      renderThumbnails(pictures);
+    })
+    .catch((error) => {
+      showLoadError(error.message);
+    });
 };
 
 document.addEventListener('DOMContentLoaded', initApp);
-
 

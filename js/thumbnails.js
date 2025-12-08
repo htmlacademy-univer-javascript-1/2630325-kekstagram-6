@@ -1,4 +1,3 @@
-import { createPictures } from './data.js';
 import { openBigPicture } from './big-picture.js';
 
 const createThumbnailElement = (picture) => {
@@ -35,10 +34,6 @@ const renderThumbnails = (pictures) => {
   containerElement.appendChild(fragment);
 };
 
-const initThumbnails = () => {
-  const pictures = createPictures();
-  renderThumbnails(pictures);
-};
+export { renderThumbnails };
 
-export { initThumbnails };
 
