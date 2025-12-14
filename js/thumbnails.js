@@ -1,5 +1,7 @@
 import { openBigPicture } from './big-picture.js';
 
+const containerElement = document.querySelector('.pictures');
+
 const createThumbnailElement = (picture) => {
   const templateElement = document.querySelector('#picture').content;
   const thumbnailFragment = templateElement.cloneNode(true);
@@ -22,8 +24,12 @@ const createThumbnailElement = (picture) => {
   return thumbnailFragment;
 };
 
+const clearThumbnails = () => {
+  const pictureElements = containerElement.querySelectorAll('.picture');
+  pictureElements.forEach((picture) => picture.remove());
+};
+
 const renderThumbnails = (pictures) => {
-  const containerElement = document.querySelector('.pictures');
   const fragment = document.createDocumentFragment();
 
   pictures.forEach((picture) => {
@@ -34,6 +40,5 @@ const renderThumbnails = (pictures) => {
   containerElement.appendChild(fragment);
 };
 
-export { renderThumbnails };
-
+export { renderThumbnails, clearThumbnails };
 
