@@ -24,6 +24,8 @@ const previewImageElement = formElement.querySelector('.img-upload__preview img'
 const effectsPreviewElements = formElement.querySelectorAll('.effects__preview');
 const bodyElement = document.body;
 
+let currentImageUrl = null;
+
 const pristine = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
@@ -106,6 +108,11 @@ const closeForm = () => {
   pristine.reset();
   resetScale();
   resetEffects();
+
+  if (currentImageUrl) {
+    URL.revokeObjectURL(currentImageUrl);
+    currentImageUrl = null;
+  }
 };
 
 function onDocumentKeydown(evt) {
@@ -122,20 +129,31 @@ const openForm = () => {
   overlayElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
 
+  resetScale();
+  resetEffects();
+
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
 const updatePreview = () => {
   const file = fileInputElement.files[0];
-  const fileName = file.name.toLowerCase();
 
+  if (!file) {
+    return;
+  }
+
+  const fileName = file.name.toLowerCase();
   const isValidType = FILE_TYPES.some((type) => fileName.endsWith(type));
 
   if (isValidType) {
-    const imageUrl = URL.createObjectURL(file);
-    previewImageElement.src = imageUrl;
+    if (currentImageUrl) {
+      URL.revokeObjectURL(currentImageUrl);
+    }
+
+    currentImageUrl = URL.createObjectURL(file);
+    previewImageElement.src = currentImageUrl;
     effectsPreviewElements.forEach((preview) => {
-      preview.style.backgroundImage = `url('${imageUrl}')`;
+      preview.style.backgroundImage = `url('${currentImageUrl}')`;
     });
   }
 };
@@ -143,6 +161,10 @@ const updatePreview = () => {
 const onFileInputChange = () => {
   updatePreview();
   openForm();
+};
+
+const onCloseButtonClick = () => {
+  closeForm();
 };
 
 const onFormSubmit = (evt) => {
@@ -167,7 +189,7 @@ const onFormSubmit = (evt) => {
 };
 
 fileInputElement.addEventListener('change', onFileInputChange);
-closeButtonElement.addEventListener('click', closeForm);
+closeButtonElement.addEventListener('click', onCloseButtonClick);
 formElement.addEventListener('submit', onFormSubmit);
 
 
