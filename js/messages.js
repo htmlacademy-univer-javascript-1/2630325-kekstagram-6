@@ -1,4 +1,5 @@
 const ALERT_SHOW_TIME = 5000;
+const ALERT_Z_INDEX = '1000';
 
 const showLoadError = (message) => {
   const containerElement = document.createElement('div');
@@ -11,7 +12,7 @@ const showLoadError = (message) => {
   containerElement.style.color = '#ffffff';
   containerElement.style.fontSize = '20px';
   containerElement.style.textAlign = 'center';
-  containerElement.style.zIndex = '1000';
+  containerElement.style.zIndex = ALERT_Z_INDEX;
   containerElement.textContent = message;
 
   document.body.appendChild(containerElement);
@@ -23,11 +24,13 @@ const showLoadError = (message) => {
 
 const hideMessage = () => {
   const messageElement = document.querySelector('.success') || document.querySelector('.error');
+
   if (messageElement) {
     messageElement.remove();
-    document.removeEventListener('keydown', onMessageKeydown);
-    document.removeEventListener('click', onOutsideClick);
   }
+
+  document.removeEventListener('keydown', onMessageKeydown);
+  document.removeEventListener('click', onOutsideClick);
 };
 
 function onMessageKeydown(evt) {
