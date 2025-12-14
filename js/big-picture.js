@@ -35,6 +35,18 @@ const createCommentElement = (comment) => {
   return commentItem;
 };
 
+const updateCommentsCounter = () => {
+  const shownCountElement = commentCountElement.querySelector('.social__comment-shown-count');
+  const totalCountElement = commentCountElement.querySelector('.social__comment-total-count');
+
+  if (!shownCountElement) {
+    commentCountElement.innerHTML = `<span class="social__comment-shown-count">${shownCommentsCount}</span> из <span class="social__comment-total-count comments-count">${currentComments.length}</span> комментариев`;
+  } else {
+    shownCountElement.textContent = shownCommentsCount;
+    totalCountElement.textContent = currentComments.length;
+  }
+};
+
 const renderComments = () => {
   shownCommentsCount += COMMENTS_PER_PORTION;
 
@@ -56,7 +68,7 @@ const renderComments = () => {
 
   commentsContainerElement.appendChild(fragment);
 
-  commentCountElement.innerHTML = `${shownCommentsCount} из <span class="comments-count">${currentComments.length}</span> комментариев`;
+  updateCommentsCounter();
 };
 
 const onLoaderClick = () => {
