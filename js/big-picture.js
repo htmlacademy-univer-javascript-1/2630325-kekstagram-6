@@ -1,4 +1,5 @@
 const COMMENTS_PER_PORTION = 5;
+const AVATAR_SIZE = 35;
 
 const bigPictureElement = document.querySelector('.big-picture');
 const pictureImageElement = bigPictureElement.querySelector('.big-picture__img img');
@@ -21,8 +22,8 @@ const createCommentElement = (comment) => {
   avatarImage.classList.add('social__picture');
   avatarImage.src = comment.avatar;
   avatarImage.alt = comment.name;
-  avatarImage.width = 35;
-  avatarImage.height = 35;
+  avatarImage.width = AVATAR_SIZE;
+  avatarImage.height = AVATAR_SIZE;
 
   const messageText = document.createElement('p');
   messageText.classList.add('social__text');
@@ -102,4 +103,5 @@ closeButtonElement.addEventListener('click', () => {
 });
 
 export { openBigPicture };
+
 
