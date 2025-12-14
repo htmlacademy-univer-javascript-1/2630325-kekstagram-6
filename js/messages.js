@@ -3,6 +3,7 @@ const ALERT_Z_INDEX = '1000';
 
 const showLoadError = (message) => {
   const containerElement = document.createElement('div');
+  containerElement.classList.add('data-error');
   containerElement.style.position = 'fixed';
   containerElement.style.top = '0';
   containerElement.style.left = '0';
@@ -49,13 +50,25 @@ function onOutsideClick(evt) {
 }
 
 const showMessage = (templateId, buttonClass) => {
-  const templateElement = document.querySelector(`#${templateId}`).content;
-  const messageElement = templateElement.cloneNode(true);
+  const templateElement = document.querySelector(`#${templateId}`);
+
+  if (!templateElement) {
+    return;
+  }
+
+  const messageElement = templateElement.content.cloneNode(true);
 
   document.body.appendChild(messageElement);
 
+  const messageContainer = document.querySelector(`.${templateId}`);
+  if (messageContainer) {
+    messageContainer.style.zIndex = '9999';
+  }
+
   const buttonElement = document.querySelector(`.${buttonClass}`);
-  buttonElement.addEventListener('click', hideMessage);
+  if (buttonElement) {
+    buttonElement.addEventListener('click', hideMessage);
+  }
 
   document.addEventListener('keydown', onMessageKeydown);
   document.addEventListener('click', onOutsideClick);
