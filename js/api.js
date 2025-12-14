@@ -1,9 +1,5 @@
-const BASE_URL = 'https://29.javascript.htmlacademy.pro/kekstagram';
-
-const Route = {
-  GET_DATA: '/data',
-  SEND_DATA: '/'
-};
+const GET_URL = 'https://32.javascript.htmlacademy.pro/kekstagram/data';
+const POST_URL = 'https://32.javascript.htmlacademy.pro/kekstagram/';
 
 const ErrorText = {
   GET_DATA: 'Не удалось загрузить данные',
@@ -11,24 +7,48 @@ const ErrorText = {
 };
 
 const loadPictures = () =>
-  fetch(`${BASE_URL}${Route.GET_DATA}`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(ErrorText.GET_DATA);
+  new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+
+    xhr.addEventListener('load', () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          const data = JSON.parse(xhr.responseText);
+          resolve(data);
+        } catch (err) {
+          reject(new Error(ErrorText.GET_DATA));
+        }
+      } else {
+        reject(new Error(ErrorText.GET_DATA));
       }
-      return response.json();
     });
 
-const sendPicture = (formData) =>
-  fetch(`${BASE_URL}${Route.SEND_DATA}`, {
-    method: 'POST',
-    body: formData
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(ErrorText.SEND_DATA);
-      }
-      return response.json();
+    xhr.addEventListener('error', () => {
+      reject(new Error(ErrorText.GET_DATA));
     });
+
+    xhr.open('GET', GET_URL);
+    xhr.send();
+  });
+
+const sendPicture = (formData) =>
+  new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+
+    xhr.addEventListener('load', () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        resolve();
+      } else {
+        reject(new Error(ErrorText.SEND_DATA));
+      }
+    });
+
+    xhr.addEventListener('error', () => {
+      reject(new Error(ErrorText.SEND_DATA));
+    });
+
+    xhr.open('POST', POST_URL);
+    xhr.send(formData);
+  });
 
 export { loadPictures, sendPicture };

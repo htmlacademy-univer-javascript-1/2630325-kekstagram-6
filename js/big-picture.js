@@ -1,4 +1,5 @@
 const COMMENTS_PER_PORTION = 5;
+const AVATAR_SIZE = 35;
 
 const bigPictureElement = document.querySelector('.big-picture');
 const pictureImageElement = bigPictureElement.querySelector('.big-picture__img img');
@@ -21,8 +22,8 @@ const createCommentElement = (comment) => {
   avatarImage.classList.add('social__picture');
   avatarImage.src = comment.avatar;
   avatarImage.alt = comment.name;
-  avatarImage.width = 35;
-  avatarImage.height = 35;
+  avatarImage.width = AVATAR_SIZE;
+  avatarImage.height = AVATAR_SIZE;
 
   const messageText = document.createElement('p');
   messageText.classList.add('social__text');
@@ -32,6 +33,18 @@ const createCommentElement = (comment) => {
   commentItem.appendChild(messageText);
 
   return commentItem;
+};
+
+const updateCommentsCounter = () => {
+  const shownCountElement = commentCountElement.querySelector('.social__comment-shown-count');
+  const totalCountElement = commentCountElement.querySelector('.social__comment-total-count');
+
+  if (!shownCountElement) {
+    commentCountElement.innerHTML = `<span class="social__comment-shown-count">${shownCommentsCount}</span> из <span class="social__comment-total-count comments-count">${currentComments.length}</span> комментариев`;
+  } else {
+    shownCountElement.textContent = shownCommentsCount;
+    totalCountElement.textContent = currentComments.length;
+  }
 };
 
 const renderComments = () => {
@@ -55,7 +68,7 @@ const renderComments = () => {
 
   commentsContainerElement.appendChild(fragment);
 
-  commentCountElement.innerHTML = `${shownCommentsCount} из <span class="comments-count">${currentComments.length}</span> комментариев`;
+  updateCommentsCounter();
 };
 
 const onLoaderClick = () => {
@@ -102,4 +115,5 @@ closeButtonElement.addEventListener('click', () => {
 });
 
 export { openBigPicture };
+
 
